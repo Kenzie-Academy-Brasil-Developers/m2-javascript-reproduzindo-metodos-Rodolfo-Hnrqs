@@ -4,25 +4,12 @@ let testeMap = [1,2,3];
 let arrayReduce = [1, 2, 3, 4];
 let beasts = ['ant', 'bison', 'camel', 'duck', 'bison'];
 
-// function minhaCallBackForEach(element, index, array) {
-//   array[index] = `Número ${element} na posição: ${index}, veio desse array: ${array}`;
-// }
-
-// function meuMetodoforEach(array, callback) {
-//     for(let index = 0; index < array.length; index++){
-//         const currentValue = array[index]
-//         callback(currentValue, index, array)
-//     }
-//   }
-
-// meuMetodoforEach(array, minhaCallBackForEach)
-// console.table(array)
 
 //Função Find
 
-function meuMetodoFind (array, callback, valor){
+function meuMetodoFind (array, callback){
     for (let i = 0; i < array.length; i++){
-        if (callback(valor, i, array )){
+        if (callback(2, i, array )){
             return array[i];
         }
     }
@@ -32,14 +19,15 @@ function callBackFind (element, index, array){
     return element === array[index];
 }
 
-console.log(meuMetodoFind(arrayOrigin, callBackFind, 2));
+console.log("Find:")
+console.log(meuMetodoFind(arrayOrigin, callBackFind));
 
 //Função Filter
 
-function meuMetodoFilter (array, callback, valor){
+function meuMetodoFilter (array, callback){
     let outPut = [];
     for (let i = 0; i < array.length; i++){
-        if (callback(valor, i, array)){
+        if (callback("Gato", i, array)){
             outPut.push(array[i]);
         }
     }
@@ -50,8 +38,8 @@ function callBackFilter (element, index, array){
     return element === array[index];
 }
 
-console.log(meuMetodoFilter(arrayOrigin, callBackFilter, 2));
-console.log(meuMetodoFilter(arrayStrings, callBackFilter, "Gato"));
+console.log("Filter:")
+console.log(meuMetodoFilter(arrayStrings, callBackFilter));
 
 //Função Map
 
@@ -67,12 +55,19 @@ function callBackMap (element, index, array){
     return element * array[index];
 }
 
+console.log("Map:")
 console.log(meuMetodoMap(testeMap, callBackMap));
 
 //Função Reduce
 
 function meuMetodoReduce (array, callback, valorInicial){
     let outPut = 0;
+    if(valorInicial == null){
+        valorInicial = 0;
+    }else{
+        outPut += valorInicial;
+        valorInicial = 0;
+    }
     for (let i = 0; i < array.length; i++){
         outPut += callback(valorInicial, i, array);
     }
@@ -84,13 +79,17 @@ function callBackReduce (element, index, array){
     return element + array[index];
 }
 
-console.log(meuMetodoReduce(arrayReduce, callBackReduce, 0));
+console.log("Método Reduce:")
+console.log(meuMetodoReduce(arrayReduce, callBackReduce));
 
 //Função Includes
 
-function meuMetodoIncludes (array, callback, valor){
-    for (let i = 0; i < array.length; i++){
-        if(callback(valor, i, array)){
+function meuMetodoIncludes (array, element, index){
+    if(index == null){
+        index = 0;
+    }
+    for (let i = index; i < array.length; i++){
+        if(callBackIncludes(element, i, array)){
             return true;
         }
     }
@@ -102,21 +101,22 @@ function callBackIncludes (element, index, array){
     return element === array[index];
 }
 
-console.log(meuMetodoIncludes(arrayReduce, callBackIncludes, 1));
-console.log(meuMetodoIncludes(arrayStrings, callBackIncludes, "Gato"));
+console.log("Includes:")
+console.log(meuMetodoIncludes(arrayReduce, 2, 2));
+console.log(meuMetodoIncludes(arrayStrings, "Gato"));
 
 //Função IndexOf
 
-function meuMetodoIndexOf(array, callback, valor, indice){
-    if(indice != 0){
-        for (let i = indice; i < array.length; i++){
-            if((callback(valor, i, array ))){
+function meuMetodoIndexOf(array, element, index){
+    if (index == null){
+        for (let i = 0; i < array.length; i++){
+            if((callBackIndexOf(element, i, array ))){
                 return i;
             }
         }
     }else {
-        for (let i = 0; i < array.length; i++){
-            if((callback(valor, i-indice, array ))){
+        for(let i = index; i < array.length; i++){
+            if((callBackIndexOf(element, i, array ))){
                 return i;
             }
         }
@@ -129,5 +129,6 @@ function callBackIndexOf(element, index, array){
     return element === array[index];
 }
 
-console.log(meuMetodoIndexOf(beasts, callBackIndexOf, "bison", 0));
-console.log(meuMetodoIndexOf(beasts, callBackIndexOf, "bison", 2))
+console.log("Index Of:")
+console.log(meuMetodoIndexOf(beasts, "bison"));
+console.log(meuMetodoIndexOf(beasts, "bison", 2))
